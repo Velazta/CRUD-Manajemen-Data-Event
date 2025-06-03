@@ -7,7 +7,6 @@
     <a href="index.php?controller=User&action=create" class="inline-block rounded bg-green-600 px-5 py-2 text-white font-medium hover:bg-green-700 transition duration-200 mt-4 sm:mt-0">+ Tambah User</a>
   </div>
 
-  <!-- Search bar -->
   <form method="GET" action="index.php" class="mb-4">
     <input type="hidden" name="controller" value="User" />
     <input type="hidden" name="action" value="index" />
@@ -18,7 +17,6 @@
   </form>
 
 
-  <!-- Table -->
   <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-200">
     <table class="min-w-full bg-white">
       <thead class="bg-green-100">
@@ -54,7 +52,6 @@
     </table>
   </div>
 
-  <!-- Pagination -->
   <div class="flex justify-between items-center mt-4">
     <button id="prevBtn" class="bg-green-600 text-white px-4 py-2 rounded disabled:opacity-50" disabled>Previous</button>
     <div class="text-gray-700 font-semibold" id="pageIndicator">Page 1</div>
@@ -64,13 +61,11 @@
 </div>
 
 <script>
-  // Ambil semua baris tr pada tbody
   const tbody = document.getElementById('userTableBody');
   const rows = Array.from(tbody.getElementsByTagName('tr'));
   const rowsPerPage = 5;
   let currentPage = 1;
 
-  // Fungsi render pagination
   function renderTablePage(page) {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
@@ -88,10 +83,8 @@
     document.getElementById('nextBtn').disabled = end >= rows.length;
   }
 
-  // Inisialisasi halaman pertama
   renderTablePage(currentPage);
 
-  // Tombol pagination event
   document.getElementById('prevBtn').addEventListener('click', () => {
     if (currentPage > 1) {
       currentPage--;
@@ -106,7 +99,6 @@
     }
   });
 
-  // Search input event
   document.getElementById('searchInput').addEventListener('input', (e) => {
     const filter = e.target.value.toLowerCase();
     rows.forEach(row => {
@@ -118,7 +110,6 @@
       }
     });
 
-    // Reset pagination setelah filter
     currentPage = 1;
     renderTablePage(currentPage);
   });

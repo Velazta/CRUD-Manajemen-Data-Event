@@ -53,3 +53,5 @@ class User
         $this->conn->exec("ALTER TABLE users AUTO_INCREMENT = $nextId");
     }
 }
+
+

@@ -11,7 +11,6 @@
 
 <body class="bg-gray-50 flex flex-col min-h-screen"> 
 
-  <!-- HEADER -->
   <nav class="bg-green-600 shadow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
