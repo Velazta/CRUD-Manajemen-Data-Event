@@ -1,4 +1,6 @@
 <?php 
+require_once __DIR__ . '/AuthController.php'; // Pastikan path ini benar
+
 require_once __DIR__ . '/../models/User.php';
 
 class UserController {
@@ -6,6 +8,7 @@ class UserController {
 
     public function __construct()
     {
+        AuthController::protectPage(); // Panggil method proteksi
         $this->userModel = new User();
     }
 
