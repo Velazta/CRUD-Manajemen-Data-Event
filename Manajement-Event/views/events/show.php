@@ -10,14 +10,14 @@ include __DIR__ . '/../components/header.php'; ?>
         <div class="mb-6 p-4 bg-green-100 text-green-700 border border-green-300 rounded-lg shadow">
             <?= htmlspecialchars($_SESSION['success_message_event_show']) ?>
         </div>
-        <?php unset($_SESSION['success_message_event_show']); // Hapus pesan setelah ditampilkan ?>
+        <?php unset($_SESSION['success_message_event_show']);?>
     <?php endif; ?>
 
     <?php if (isset($_SESSION['error_message_event_show'])): ?>
         <div class="mb-6 p-4 bg-red-100 text-red-700 border border-red-300 rounded-lg shadow">
             <?= htmlspecialchars($_SESSION['error_message_event_show']) ?>
         </div>
-        <?php unset($_SESSION['error_message_event_show']); // Hapus pesan setelah ditampilkan ?>
+        <?php unset($_SESSION['error_message_event_show']);?>
     <?php endif; ?>
 
     <div class="bg-white shadow-xl rounded-lg p-6 md:p-8">
@@ -67,7 +67,6 @@ include __DIR__ . '/../components/header.php'; ?>
                                 }
                             }
                         }
-                        // Hanya tampilkan user yang BUKAN merupakan peserta DAN memiliki role 'Peserta' (jika ada pembedaan role)
                         // Untuk saat ini, kita hanya cek apakah sudah jadi peserta atau belum.
                         if (!$isParticipant):
                         ?>

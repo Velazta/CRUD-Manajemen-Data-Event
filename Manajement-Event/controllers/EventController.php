@@ -21,14 +21,14 @@ class EventController
             session_start();
         }
     }
-    // 1
+    // sanitizeInputData
     private function sanitizeInput($data)
     {
         $data = trim($data);
         $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
         return $data;
     }
-    // 1
+    // sanitizeInputData
     private function validateEventData($data)
     {
         $errors = [];

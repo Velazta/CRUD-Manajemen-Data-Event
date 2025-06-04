@@ -54,7 +54,7 @@ if (session_status() == PHP_SESSION_NONE) {
             echo '<div class="mb-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded">';
             echo htmlspecialchars($_SESSION['error_message']);
             echo '</div>';
-            unset($_SESSION['error_message']); // Hapus pesan setelah ditampilkan
+            unset($_SESSION['error_message']); 
         }
         if (isset($_SESSION['success_message'])) {
             echo '<div class="mb-4 p-3 bg-green-100 text-green-700 border border-green-300 rounded">';

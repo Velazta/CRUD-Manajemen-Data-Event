@@ -9,10 +9,6 @@ class AuthController {
         }
         $this->adminModel = new Admin();
     }
-
-    
-    //  Menghasilkan token CSRF, menyimpannya di session, dan mengembalikannya.
-    //  @return string Token CSRF yang dihasilkan.
      
     private function generateCsrfToken() {
         if (empty($_SESSION['csrf_token'])) {
@@ -20,11 +16,6 @@ class AuthController {
         }
         return $_SESSION['csrf_token'];
     }
-
-    
-    //  Memverifikasi token CSRF yang dikirim dengan yang ada di session.
-    // @param string $submittedToken Token yang dikirim dari form.
-    //  @return bool True jika valid, false jika tidak.
      
     private function verifyCsrfToken($submittedToken) {
         if (isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $submittedToken)) {

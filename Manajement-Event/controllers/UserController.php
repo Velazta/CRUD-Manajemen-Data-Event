@@ -1,6 +1,5 @@
 <?php 
-require_once __DIR__ . '/AuthController.php'; // Pastikan path ini benar
-
+require_once __DIR__ . '/AuthController.php'; 
 require_once __DIR__ . '/../models/User.php';
 
 class UserController {
