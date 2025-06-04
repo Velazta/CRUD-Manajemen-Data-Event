@@ -54,6 +54,8 @@ if (session_status() == PHP_SESSION_NONE) {
         ?>
 
         <form action="index.php?controller=Auth&action=doRegister" method="POST">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token ?? '') ?>">
+        
             <div class="mb-6">
                 <label for="name" class="block text-gray-700 text-sm font-medium mb-2">Nama Lengkap</label>
                 <input type="text" id="name" name="name"

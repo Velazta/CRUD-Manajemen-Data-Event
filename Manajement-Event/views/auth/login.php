@@ -65,6 +65,8 @@ if (session_status() == PHP_SESSION_NONE) {
         ?>
 
         <form action="index.php?controller=Auth&action=authenticate" method="POST">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token ?? '') ?>">
+
             <div class="mb-6">
                 <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email</label>
                 <input type="email" id="email" name="email" class="login-input shadow-sm appearance-none w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan email Anda" required>
