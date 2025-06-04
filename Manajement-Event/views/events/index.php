@@ -1,11 +1,10 @@
 <?php
-// Pastikan session sudah dimulai (sebaiknya sudah di index.php utama atau header.php)
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 // Definisikan $phpRowsPerPage untuk digunakan dalam logika PHP
-$phpRowsPerPage = 5; // Sesuaikan dengan jumlah item per halaman yang Anda inginkan untuk pagination
+$phpRowsPerPage = 5;
 
 include __DIR__ . '/../components/header.php';
 ?>
@@ -16,14 +15,14 @@ include __DIR__ . '/../components/header.php';
         <div class="mb-4 p-3 bg-green-100 text-green-700 border border-green-300 rounded shadow">
             <?= htmlspecialchars($_SESSION['success_message_global']) ?>
         </div>
-        <?php unset($_SESSION['success_message_global']); // Hapus pesan setelah ditampilkan ?>
+        <?php unset($_SESSION['success_message_global']);?>
     <?php endif; ?>
 
     <?php if (isset($_SESSION['error_message_global'])): ?>
         <div class="mb-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded shadow">
             <?= htmlspecialchars($_SESSION['error_message_global']) ?>
         </div>
-        <?php unset($_SESSION['error_message_global']); // Hapus pesan setelah ditampilkan ?>
+        <?php unset($_SESSION['error_message_global']);?>
     <?php endif; ?>
 
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -57,7 +56,7 @@ include __DIR__ . '/../components/header.php';
                     <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
                         <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700"><?= $event['id'] ?></td>
                         <td class="py-4 px-6 whitespace-nowrap text-sm font-semibold text-gray-900"><?= htmlspecialchars($event['name']) ?></td>
-                        <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700"><?= htmlspecialchars(date('d M Y', strtotime($event['date']))) // Format tanggal ?></td>
+                        <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700"><?= htmlspecialchars(date('d M Y', strtotime($event['date'])))?></td>
                         <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700"><?= htmlspecialchars($event['location']) ?></td>
                         <td class="py-4 px-6 whitespace-nowrap text-center text-sm font-medium space-x-2">
                             <a href="index.php?controller=Event&action=show&id=<?= $event['id'] ?>" class="text-green-600 hover:text-green-900 font-semibold">Lihat</a>
@@ -87,10 +86,8 @@ include __DIR__ . '/../components/header.php';
 
 <script>
   const eventTbody = document.getElementById('eventTableBody');
-  // Gunakan nama variabel yang berbeda untuk baris di JavaScript untuk menghindari kebingungan
   const jsEventRows = eventTbody ? Array.from(eventTbody.getElementsByTagName('tr')) : [];
-  // Gunakan variabel yang sama dengan yang didefinisikan di PHP untuk konsistensi, atau definisikan secara independen.
-  const jsRowsPerPage = <?= $phpRowsPerPage; ?>; // Mengambil nilai dari PHP
+  const jsRowsPerPage = <?= $phpRowsPerPage; ?>;
   let jsCurrentPage = 1;
 
   const pageIndicator = document.getElementById('pageIndicator');
@@ -141,14 +138,12 @@ include __DIR__ . '/../components/header.php';
       }
     });
   } else if (prevBtn && nextBtn && pageIndicator) {
-    // Jika sedang search atau tidak ada baris yang cukup untuk pagination, disable tombol
     prevBtn.disabled = true;
     nextBtn.disabled = true;
     
     if (jsEventRows.length === 0) {
         pageIndicator.innerText = 'Halaman 1';
     } else if (currentSearchQuery && jsEventRows.length > 0) {
-        // Jika ada hasil dari search, semua ditampilkan, jadi pagination client-side tidak relevan
         pageIndicator.innerText = 'Halaman 1 (Hasil Pencarian)';
     }
   }

@@ -17,13 +17,12 @@ class Event
                 $statement = $this->conn->prepare("SELECT * FROM events WHERE name LIKE ? ORDER BY id DESC");
                 $statement->execute([$searchTerm]);
             } else {
-                // query() langsung mengeksekusi dan mengembalikan PDOStatement, tidak perlu execute() lagi
                 $statement = $this->conn->query("SELECT * FROM events ORDER BY id DESC");
             }
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             // error_log("Error fetching all events: " . $e->getMessage()); // Opsional
-            return []; // Kembalikan array kosong jika ada error
+            return []; 
         }
     }
 
@@ -64,7 +63,6 @@ class Event
     public function delete($id)
 {
     if (!$this->conn) {
-        // var_dump("Koneksi gagal di model");
         return false;
     }
     try {
@@ -73,22 +71,16 @@ class Event
         $deleteSuccess = $statement->execute([$id]);
         $rowCount = $statement->rowCount();
 
-        // var_dump("deleteSuccess: ", $deleteSuccess, "rowCount: ", $rowCount);
-
         if ($deleteSuccess && $rowCount > 0) {
-            // ... (auto_increment) ...
             $this->conn->commit();
-            // var_dump("Akan return true dari model");
             return true;
         } else {
             if ($this->conn->inTransaction()) {
                 $this->conn->rollBack();
             }
-            // var_dump("Akan return false dari model (delete gagal atau rowCount 0)");
             return false;
         }
     } catch (PDOException $e) {
-        // var_dump("Exception di model: " . $e->getMessage());
         if ($this->conn && $this->conn->inTransaction()) {
             $this->conn->rollBack();
         }

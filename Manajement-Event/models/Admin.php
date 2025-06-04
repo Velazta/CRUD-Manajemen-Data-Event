@@ -8,11 +8,8 @@ class Admin {
         $this->conn = Database::getConnection();
     }
 
-    /**
-     * Membuat admin baru.
-     * @param array $data Data admin (name, email, password). Password harus sudah di-hash.
-     * @return bool True jika berhasil, false jika gagal.
-     */
+    
+    // Membuat admin baru.
     public function create($data) {
         try {
             $stmt = $this->conn->prepare("INSERT INTO admins (name, email, password) VALUES (:name, :email, :password)");
@@ -26,11 +23,9 @@ class Admin {
         }
     }
 
-    /**
-     * Mencari admin berdasarkan email.
-     * @param string $email Email admin.
-     * @return mixed Array data admin jika ditemukan, false jika tidak.
-     */
+    
+    // Mencari admin berdasarkan email.
+
     public function findByEmail($email) {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM admins WHERE email = :email");
@@ -42,11 +37,8 @@ class Admin {
         }
     }
 
-    /**
-     * Mencari admin berdasarkan ID.
-     * @param int $id ID admin.
-     * @return mixed Array data admin jika ditemukan, false jika tidak.
-     */
+    
+    //  * Mencari admin berdasarkan ID.
     public function findById($id) {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM admins WHERE id = :id");
@@ -58,12 +50,8 @@ class Admin {
         }
     }
 
-    /**
-     * Menyimpan remember_token untuk admin.
-     * @param int $id ID admin.
-     * @param string $token Token untuk "remember me".
-     * @return bool True jika berhasil, false jika gagal.
-     */
+    
+    // Menyimpan remember_token untuk admin.
     public function setRememberToken($id, $token) {
         try {
             $stmt = $this->conn->prepare("UPDATE admins SET remember_token = :token WHERE id = :id");
@@ -75,11 +63,9 @@ class Admin {
         }
     }
 
-    /**
-     * Mencari admin berdasarkan remember_token.
-     * @param string $token Token "remember me".
-     * @return mixed Array data admin jika ditemukan, false jika tidak.
-     */
+    
+    //  Mencari admin berdasarkan remember_token.
+     
     public function findByRememberToken($token) {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM admins WHERE remember_token = :token");

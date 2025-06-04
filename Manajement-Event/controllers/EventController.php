@@ -77,10 +77,10 @@ class EventController
             header("Location: index.php?controller=Event&action=index");
             exit;
         }
-        // Sanitasi ID jika diperlukan, meskipun biasanya ID adalah integer
+        // Sanitasi ID 
         $id = filter_var($id, FILTER_VALIDATE_INT);
         if ($id === false) {
-            // Handle error ID tidak valid, mungkin redirect atau tampilkan pesan
+            // Handle error ID tidak valid
             $_SESSION['error_message_global'] = "ID Event tidak valid.";
             header("Location: index.php?controller=Event&action=index");
             exit;
@@ -122,19 +122,18 @@ class EventController
                     $_SESSION['form_errors'] = ['general' => 'Gagal menyimpan event ke database.'];
                 }
             } else {
-                // Jika ada error, simpan error dan input lama ke session
+                // error, simpan error dan input lama ke session
                 $_SESSION['form_errors'] = $errors;
-                $_SESSION['old_event_input'] = $inputData; // Simpan data yang sudah disanitasi
+                $_SESSION['old_event_input'] = $inputData; 
             }
-            // Redirect kembali ke form create untuk menampilkan error dan input lama
             header("Location: index.php?controller=Event&action=create");
             exit;
         }
         // Menampilkan form create (GET request)
         $form_errors = $_SESSION['form_errors'] ?? [];
         $old_input = $_SESSION['old_event_input'] ?? [];
-        unset($_SESSION['form_errors']); // Hapus setelah diambil
-        unset($_SESSION['old_event_input']); // Hapus setelah diambil
+        unset($_SESSION['form_errors']); 
+        unset($_SESSION['old_event_input']); 
 
         require __DIR__ . '/../views/events/create.php';
     }
@@ -189,27 +188,21 @@ class EventController
             exit;
         }
 
-        // Menampilkan form edit (GET request)
-        // Jika ada old_input dari percobaan submit sebelumnya yang gagal, gunakan itu. Jika tidak, gunakan data dari DB.
         $form_errors = $_SESSION['form_errors'] ?? [];
         $old_input_session = $_SESSION['old_event_input'] ?? null;
 
-        // Tentukan data yang akan ditampilkan di form
-        // Jika ada old input dari session (karena validasi gagal), prioritaskan itu
-        $display_data = $event; // Default ke data dari database
+
+        $display_data = $event;
         if ($old_input_session) {
-            // Hanya ambil field yang relevan dari old_input_session untuk dicampur dengan $event
-            // agar ID dan data lain yang tidak ada di form tetap terjaga.
             $display_data['name'] = $old_input_session['name'] ?? $event['name'];
             $display_data['date'] = $old_input_session['date'] ?? $event['date'];
             $display_data['location'] = $old_input_session['location'] ?? $event['location'];
         }
 
-        unset($_SESSION['form_errors']); // Hapus setelah diambil
-        unset($_SESSION['old_event_input']); // Hapus setelah diambil
+        unset($_SESSION['form_errors']); 
+        unset($_SESSION['old_event_input']); 
 
-        // Kirim $display_data yang sudah disesuaikan ke view, bukan $event mentah jika ada old_input
-        $event = $display_data; // Ganti $event dengan $display_data untuk dikirim ke view
+        $event = $display_data; 
         require __DIR__ . '/../views/events/edit.php';
     }
 
@@ -219,11 +212,10 @@ class EventController
     if ($id) {
         $id = filter_var($id, FILTER_VALIDATE_INT);
         if ($id !== false) {
-            $delete_result = $this->eventModel->delete($id); // Simpan hasilnya
+            $delete_result = $this->eventModel->delete($id); 
 
             // DEBUGGING:
-            var_dump($delete_result); // Lihat apa nilai boolean yang dikembalikan
-            // exit; // Hentikan eksekusi di sini untuk melihat output var_dump
+            var_dump($delete_result); 
 
             if ($delete_result) {
                  $_SESSION['success_message_global'] = "Event berhasil dihapus.";
@@ -234,7 +226,6 @@ class EventController
              $_SESSION['error_message_global'] = "ID Event tidak valid untuk dihapus. (Debug: ID tidak valid)";
         }
     } else {
-        // Tambahkan ini jika ID tidak ada sama sekali di $_GET
          $_SESSION['error_message_global'] = "ID Event tidak disediakan untuk dihapus. (Debug: ID tidak ada)";
     }
     header("Location: index.php?controller=Event&action=index");
