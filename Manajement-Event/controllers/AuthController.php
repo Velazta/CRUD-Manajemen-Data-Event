@@ -296,5 +296,27 @@ class AuthController {
             exit;
         }
     }
+
+    public function toggleTheme() {
+        if(session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $current_theme = $_SESSION['theme_preference'] ?? $_COOKIE['theme_preference'] ?? 'light';
+        $new_theme = ($current_theme === 'light') ? 'dark' : 'light';
+        $_SESSION['theme_preference'] = $new_theme;
+
+        setcookie('theme_preference', $new_theme, time() + (86400 * 30), "/", "", false, false);
+        
+        $redirect_url = $_GET['redirect'] ?? 'index.php';
+        if(empty($redirect_url) || !filter_var($redirect_url, FILTER_VALIDATE_URL) === false && strpos($redirect_url, 'index.php') !== 0) {
+             if (strpos($redirect_url, 'index.php?') !== 0 && strpos($redirect_url, 'index.php') !== 0 && strpos($redirect_url, '/') !== 0) {
+                $redirect_url = 'index.php';
+             }
+        }
+
+        header("Location: " . $redirect_url);
+        exit;
+    }
 }
 ?>
